@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import OpenAI from 'openai';
-console.log("API Key Check:", import.meta.env.VITE_OPENROUTER_API_KEY);
+console.log("API Key Check:", import.meta.env.VITE_OPENAI_API_KEY);
 
    
 
@@ -19,10 +19,13 @@ console.log("API Key Check:", import.meta.env.VITE_OPENROUTER_API_KEY);
 
       try {
          const openai = new OpenAI({
-      apiKey: import.meta.env.VITE_OPENROUTER_API_KEY,
+      apiKey: import.meta.env.VITE_OPENAI_API_KEY,
       baseURL: 'https://openrouter.ai/api/v1',
       dangerouslyAllowBrowser: true,
-      "HTTP-Referer": window.location.origin
+      defaultHeaders: {
+        "HTTP-Referer": window.location.origin,
+        "X-Title": "PollyGlot App",
+      }
     });
     
         const response = await openai.chat.completions.create({
@@ -97,7 +100,7 @@ console.log("API Key Check:", import.meta.env.VITE_OPENROUTER_API_KEY);
                 className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700
                 text-white font-semibold py-3 px-8 rounded-xl shadow-sm transition 
                 duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
-                  {isLoading ? 'Translate it' : 'Translating...'}
+                  {isLoading ? 'Translating...' : 'Translate it'}
                 </button>
               </div>
             </div>
